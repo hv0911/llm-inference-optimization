@@ -1,0 +1,86 @@
+# =============================================================================
+# Production LLM Optimization — Default Configuration
+# =============================================================================
+# Override via CLI arguments or environment variables.
+# =============================================================================
+
+# --- Model ---
+model:
+  model_id: "Qwen/Qwen3-0.6B"
+  base_dir: "models/base"
+  awq_dir: "models/awq"
+  gptq_dir: "models/gptq"
+  torch_dtype: "auto"           # auto | float16 | bfloat16 | float32
+  device_map: "auto"            # auto | cpu | cuda:0
+
+# --- Quantization ---
+quantization:
+  # Shared
+  num_calibration_samples: 256
+  max_seq_length: 2048
+  calibration_dataset: "wikitext"
+  calibration_dataset_config: "wikitext-2-raw-v1"
+
+  # AWQ-specific
+  awq:
+    scheme: "W4A16"
+    bits: 4
+    group_size: 128
+    targets: "Linear"
+    ignore: ["lm_head"]
+
+  # GPTQ-specific
+  gptq:
+    scheme: "W4A16"
+    bits: 4
+    group_size: 128
+    targets: "Linear"
+    ignore: ["lm_head"]
+
+# --- Benchmark ---
+benchmark:
+  prompt_lengths: [32, 128, 512, 1024, 2048]
+  generation_lengths: [64, 128, 256, 512]
+  num_warmup: 3
+  num_iterations: 10
+  results_dir: "results"
+
+  # Continuous batching (requires vLLM server running)
+  continuous_batching:
+    concurrency_levels: [1, 8, 16, 32, 64]
+    total_requests: 128
+    vllm_base_url: "http://localhost:8000"
+
+  # Prefix caching (requires vLLM server running)
+  prefix_caching:
+    shared_prefix_length: 1024
+    num_requests: 50
+
+# --- Evaluation ---
+evaluation:
+  tasks:
+    - "hellaswag"
+    - "arc_easy"
+    - "arc_challenge"
+    - "boolq"
+    - "piqa"
+    - "winogrande"
+  num_fewshot: 0
+  batch_size: "auto"
+  device: "cuda:0"
+
+# --- Serving ---
+serving:
+  host: "0.0.0.0"
+  port: 8000
+  gpu_memory_utilization: 0.85
+  max_model_len: 2048
+  tensor_parallel_size: 1
+  dtype: "auto"
+  enable_prefix_caching: false
+
+# --- HuggingFace Upload ---
+upload:
+  hf_username: "${HF_USERNAME}"
+  private: false
+  license: "apache-2.0"
