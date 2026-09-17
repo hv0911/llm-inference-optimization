@@ -28,6 +28,26 @@ A production-quality repository demonstrating modern **LLM inference optimizatio
 
 ---
 
+## Results
+
+> [!NOTE]
+> **Not yet measured.** The pipeline has not been run on this machine, so no
+> numbers are reported below. Every cell is a placeholder. Run
+> `python scripts/benchmark.py --models base,awq,gptq` and
+> `python scripts/evaluate.py` to populate them from `results/`.
+
+| Variant | Disk size | Peak GPU | TTFT (P50) | Gen. throughput | Avg. accuracy |
+| --- | --- | --- | --- | --- | --- |
+| **FP16 base** | not yet measured | not yet measured | not yet measured | not yet measured | not yet measured |
+| **AWQ (W4A16)** | not yet measured | not yet measured | not yet measured | not yet measured | not yet measured |
+| **GPTQ (W4A16)** | not yet measured | not yet measured | not yet measured | not yet measured | not yet measured |
+
+*Hardware for any figures added here: NVIDIA GeForce (4 GB VRAM), CUDA 11.6.
+See [docs/benchmarking.md](docs/benchmarking.md) for metric definitions and the
+reproducibility guide.*
+
+---
+
 ## Architecture
 
 ```
