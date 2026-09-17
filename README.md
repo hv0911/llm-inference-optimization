@@ -504,6 +504,17 @@ The pipeline is designed to work on limited-VRAM GPUs. All scripts include autom
 
 ---
 
+## Documentation
+
+| Document | Contents |
+| --- | --- |
+| [Architecture](docs/architecture.md) | Pipeline design, component boundaries, data flow |
+| [Quantization](docs/quantization.md) | AWQ and GPTQ theory, group quantization, calibration |
+| [vLLM](docs/vllm.md) | PagedAttention, continuous batching, prefix caching, KV cache |
+| [Benchmarking](docs/benchmarking.md) | Metric definitions, statistical approach, reproducibility |
+
+---
+
 ## References
 
 1. **AWQ**: Lin et al., "AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration" (2023)
