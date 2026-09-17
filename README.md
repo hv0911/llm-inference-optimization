@@ -13,6 +13,7 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/hv0911/llm-inference-optimization/actions/workflows/ci.yml"><img src="https://github.com/hv0911/llm-inference-optimization/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python">
   <img src="https://img.shields.io/badge/pytorch-2.1+-red.svg" alt="PyTorch">
   <img src="https://img.shields.io/badge/license-Apache%202.0-green.svg" alt="License">

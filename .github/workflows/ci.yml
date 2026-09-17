@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install dependencies
+        # requirements.txt pulls vllm/llmcompressor/lm-eval, which need CUDA and
+        # are far larger than a CI runner should download. The test suite runs
+        # entirely on mocks, so install only what the tests actually import.
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install transformers accelerate safetensors pyyaml python-dotenv \
+                      psutil pandas numpy pytest pytest-cov
+
+      - name: Run tests
+        # Exclude markers declared in pyproject.toml: `gpu` needs CUDA and
+        # `slow` downloads model weights. Neither is used today; the filter is
+        # here so such tests are skipped automatically once they are added.
+        run: pytest tests/ -v -m "not gpu and not slow"
