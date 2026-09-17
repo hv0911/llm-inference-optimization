@@ -72,7 +72,7 @@ A production-quality repository demonstrating modern **LLM inference optimizatio
 ## Repository Structure
 
 ```
-production-llm-optimization/
+llm-inference-optimization/
 ├── config/
 │   └── default.yaml              # Central configuration
 ├── src/
