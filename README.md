@@ -13,6 +13,7 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/hv0911/llm-inference-optimization/actions/workflows/ci.yml"><img src="https://github.com/hv0911/llm-inference-optimization/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python">
   <img src="https://img.shields.io/badge/pytorch-2.1+-red.svg" alt="PyTorch">
   <img src="https://img.shields.io/badge/license-Apache%202.0-green.svg" alt="License">
@@ -24,6 +25,26 @@
 ---
 
 A production-quality repository demonstrating modern **LLM inference optimization** techniques. Downloads [Qwen/Qwen3-0.6B](https://huggingface.co/Qwen/Qwen3-0.6B), applies **AWQ** and **GPTQ** quantization via `llm-compressor`, benchmarks performance, evaluates quality, and serves via **vLLM** with an OpenAI-compatible API.
+
+---
+
+## Results
+
+> [!NOTE]
+> **Not yet measured.** The pipeline has not been run on this machine, so no
+> numbers are reported below. Every cell is a placeholder. Run
+> `python scripts/benchmark.py --models base,awq,gptq` and
+> `python scripts/evaluate.py` to populate them from `results/`.
+
+| Variant | Disk size | Peak GPU | TTFT (P50) | Gen. throughput | Avg. accuracy |
+| --- | --- | --- | --- | --- | --- |
+| **FP16 base** | not yet measured | not yet measured | not yet measured | not yet measured | not yet measured |
+| **AWQ (W4A16)** | not yet measured | not yet measured | not yet measured | not yet measured | not yet measured |
+| **GPTQ (W4A16)** | not yet measured | not yet measured | not yet measured | not yet measured | not yet measured |
+
+*Hardware for any figures added here: NVIDIA GeForce (4 GB VRAM), CUDA 11.6.
+See [docs/benchmarking.md](docs/benchmarking.md) for metric definitions and the
+reproducibility guide.*
 
 ---
 
@@ -72,7 +93,7 @@ A production-quality repository demonstrating modern **LLM inference optimizatio
 ## Repository Structure
 
 ```
-production-llm-optimization/
+llm-inference-optimization/
 ├── config/
 │   └── default.yaml              # Central configuration
 ├── src/
@@ -137,8 +158,8 @@ production-llm-optimization/
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_HF_USERNAME/production-llm-optimization.git
-cd production-llm-optimization
+git clone https://github.com/hv0911/llm-inference-optimization.git
+cd llm-inference-optimization
 
 # Create virtual environment
 python -m venv venv
@@ -480,6 +501,17 @@ The pipeline is designed to work on limited-VRAM GPUs. All scripts include autom
 | [vLLM](https://github.com/vllm-project/vllm) | High-throughput inference serving |
 | [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) | Quality benchmarking |
 | [HuggingFace Hub](https://huggingface.co) | Model distribution |
+
+---
+
+## Documentation
+
+| Document | Contents |
+| --- | --- |
+| [Architecture](docs/architecture.md) | Pipeline design, component boundaries, data flow |
+| [Quantization](docs/quantization.md) | AWQ and GPTQ theory, group quantization, calibration |
+| [vLLM](docs/vllm.md) | PagedAttention, continuous batching, prefix caching, KV cache |
+| [Benchmarking](docs/benchmarking.md) | Metric definitions, statistical approach, reproducibility |
 
 ---
 

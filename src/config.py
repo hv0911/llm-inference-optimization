@@ -150,7 +150,7 @@ class ServingConfig:
 @dataclass
 class UploadConfig:
     """HuggingFace upload configuration."""
-    hf_username: str = "YOUR_HF_USERNAME"
+    hf_username: str = "harshverma991"
     private: bool = False
     license: str = "apache-2.0"
 
