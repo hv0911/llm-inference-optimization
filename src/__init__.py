@@ -6,4 +6,4 @@ LLM quantization, benchmarking, and serving pipeline.
 """
 
 __version__ = "1.0.0"
-__author__ = "YOUR_HF_USERNAME"
+__author__ = "hv0911"

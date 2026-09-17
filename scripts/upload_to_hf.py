@@ -50,6 +50,7 @@ def generate_model_card(
     model_path: str,
     variant: str,
     base_model_id: str,
+    repo_id: str,
     config: dict | None = None,
     results_dir: str = "results",
 ) -> str:
@@ -60,6 +61,7 @@ def generate_model_card(
         model_path: Path to the quantized model.
         variant: Quantization variant (awq/gptq).
         base_model_id: Original model identifier.
+        repo_id: Target HuggingFace repo the model is uploaded to.
         config: Quantization configuration.
         results_dir: Path to benchmark results.
 
@@ -157,12 +159,12 @@ created using [`llm-compressor`](https://github.com/vllm-project/llm-compressor)
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 model = AutoModelForCausalLM.from_pretrained(
-    "YOUR_HF_USERNAME/{base_model_id.split('/')[-1]}-{variant_upper}",
+    "{repo_id}",
     device_map="auto",
     torch_dtype="auto",
 )
 tokenizer = AutoTokenizer.from_pretrained(
-    "YOUR_HF_USERNAME/{base_model_id.split('/')[-1]}-{variant_upper}"
+    "{repo_id}"
 )
 
 inputs = tokenizer("Hello, how are you?", return_tensors="pt").to(model.device)
@@ -173,7 +175,7 @@ print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 ### With vLLM
 
 ```bash
-vllm serve YOUR_HF_USERNAME/{base_model_id.split('/')[-1]}-{variant_upper} \\
+vllm serve {repo_id} \\
     --gpu-memory-utilization 0.85 \\
     --max-model-len 2048
 ```
@@ -185,7 +187,7 @@ from openai import OpenAI
 
 client = OpenAI(base_url="http://localhost:8000/v1", api_key="not-needed")
 response = client.chat.completions.create(
-    model="YOUR_HF_USERNAME/{base_model_id.split('/')[-1]}-{variant_upper}",
+    model="{repo_id}",
     messages=[{{"role": "user", "content": "Hello!"}}],
     max_tokens=100,
 )
@@ -246,6 +248,7 @@ def main() -> None:
         model_path=model_path,
         variant=variant,
         base_model_id=base_model,
+        repo_id=repo_id,
         results_dir=str(config.benchmark.results_path),
     )
 
