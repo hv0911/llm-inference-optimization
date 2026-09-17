@@ -137,8 +137,8 @@ production-llm-optimization/
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_HF_USERNAME/production-llm-optimization.git
-cd production-llm-optimization
+git clone https://github.com/hv0911/llm-inference-optimization.git
+cd llm-inference-optimization
 
 # Create virtual environment
 python -m venv venv
